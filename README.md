@@ -1,16 +1,14 @@
-# nodejs-express-week3
-- 將第二週程式碼改寫為 express 格式
-- routes： 將網址路徑管理拆到 routes 資料夾的 posts.js
-- model：將 post collections 拆到 model 資料夾，並載入到 routes/posts.js 上
+# nodejs-express-week4
+- 接續上一週程式
+- 整合 user model，只做後端 API
+- 顯示全體動態牆資料
+- 張貼動態(發文人 ID 先固定)
 
-## 此專案使用 express generator 建立
-```
-$ express --no-view --git nodejs-express-week3
-```
+
 ## 安裝專案
 ```
-$ git clone git@github.com:cgh20xx/nodejs-express-week3.git
-$ cd nodejs-express-week3
+$ git clone git@github.com:cgh20xx/nodejs-express-week4.git
+$ cd nodejs-express-week4
 $ npm install
 ```
 

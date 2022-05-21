@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/posts', postsRouter);
+app.use('/api/meta', postsRouter);
 
 // 補捉未處理路由
 app.use((req, res, next) => {

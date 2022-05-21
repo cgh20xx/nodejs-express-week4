@@ -52,7 +52,7 @@ const post = {
    */
   async deletePostById(req, res) {
     try {
-      const id = req.url.split('/').pop();
+      const id = req.params.id;
       const deletePostById = await PostModel.findByIdAndDelete(id);
       if (!deletePostById) throw new Error('[刪除失敗] 沒有此 id');
       successResponse(res, deletePostById);

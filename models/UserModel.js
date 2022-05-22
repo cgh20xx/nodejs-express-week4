@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       select: false,
     },
-    photo: String,
+    photo: {
+      type: String,
+      default: '',
+    },
     // 若不使用內建 timestamps: true，也可自定 createAt 規則。
     // createAt: {
     //   type: Date,

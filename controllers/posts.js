@@ -1,13 +1,15 @@
 const PostModel = require('../models/PostModel');
+const UserModel = require('../models/UserModel');
 const {
   successResponse,
   errorResponse,
 } = require('../services/handleResponse');
-const post = {
+const posts = {
   /**
    * 查詢所有資料
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.find
-   * @param {Object} param
+   * @param {Object} req
+   * @param {Object} res
    */
   async getPosts(req, res) {
     const allPost = await PostModel.find();
@@ -16,7 +18,8 @@ const post = {
   /**
    * 新增單筆資料
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.create
-   * @param {Object} param
+   * @param {Object} req
+   * @param {Object} res
    */
   async createPost(req, res) {
     try {
@@ -39,7 +42,8 @@ const post = {
   /**
    * 刪除所有資料
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.deleteMany
-   * @param {Object} param
+   * @param {Object} req
+   * @param {Object} res
    */
   async deletePosts(req, res) {
     await PostModel.deleteMany({});
@@ -48,7 +52,8 @@ const post = {
   /**
    * 刪除單筆資料
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.findByIdAndDelete
-   * @param {Object} param
+   * @param {Object} req
+   * @param {Object} res
    */
   async deletePostById(req, res) {
     try {
@@ -63,7 +68,8 @@ const post = {
   /**
    * 修改單筆資料
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.findByIdAndUpdate
-   * @param {Object} param
+   * @param {Object} req
+   * @param {Object} res
    */
   async updatePostById(req, res) {
     try {
@@ -95,4 +101,4 @@ const post = {
     }
   },
 };
-module.exports = post;
+module.exports = posts;

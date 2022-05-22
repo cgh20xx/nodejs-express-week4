@@ -9,6 +9,7 @@ require('./connections');
 
 // 2. 建立路由
 const postsRouter = require('./routes/posts');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/api/meta', postsRouter);
+app.use('/api/meta', usersRouter);
 
 // 補捉未處理路由
 app.use((req, res, next) => {

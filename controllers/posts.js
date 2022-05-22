@@ -81,16 +81,16 @@ const posts = {
       const { body } = req;
       const id = req.params.id;
       body.content = body.content?.trim(); // 頭尾去空白
-      if (body.name) throw new Error('[修改失敗] 不可修改 name');
+      if (body.user) throw new Error('[修改失敗] 不可修改 user');
       if (!body.content) throw new Error('[修改失敗] content 未填寫');
-      // 只開放修改 tags type image conent (name 不可改)
+      // 只開放修改 conent image (user 不可改)
       const updatePostById = await PostModel.findByIdAndUpdate(
         id,
         {
-          tags: body.tags,
-          type: body.type,
-          image: body.image,
           content: body.content,
+          image: body.image,
+          // tags: body.tags,
+          // type: body.type,
         },
         {
           // 加這行才會返回更新後的資料，否則為更新前的資料。

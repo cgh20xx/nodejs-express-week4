@@ -1,22 +1,26 @@
 const PostModel = require('../models/PostModel');
-const UserModel = require('../models/UserModel');
 const {
   successResponse,
   errorResponse,
 } = require('../services/handleResponse');
 const posts = {
   /**
-   * 查詢所有資料
+   * 查詢所有貼文
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.find
    * @param {Object} req
    * @param {Object} res
    */
   async getPosts(req, res) {
-    const allPost = await PostModel.find();
+    // 將貼文中的 user id 替換為 user 的 name 和 photo
+    // Doc:https://mongoosejs.com/docs/populate.html
+    const allPost = await PostModel.find().populate({
+      path: 'user', // path 來源為 PostModel 的 user 欄位
+      select: 'name photo', // 要顯示的欄位用空白隔開，若有不想顯示的欄位可加上減號。 ex:'-name'
+    });
     successResponse(res, allPost);
   },
   /**
-   * 新增單筆資料
+   * 新增單筆貼文
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.create
    * @param {Object} req
    * @param {Object} res
@@ -24,15 +28,16 @@ const posts = {
   async createPost(req, res) {
     try {
       const { body } = req;
-      body.content = body.content?.trim(); // 頭尾去空白
+      if (!body.user) throw new Error('[新增失敗] user id 未填寫');
       if (!body.content) throw new Error('[新增失敗] content 未填寫');
-      // 只開放新增 name tags type image conent
+      body.content = body.content?.trim(); // 頭尾去空白
+      // 只開放新增 user content image
       const newPost = await PostModel.create({
-        name: body.name,
-        tags: body.tags,
-        type: body.type,
-        image: body.image,
+        user: body.user,
         content: body.content,
+        image: body.image,
+        // tags: body.tags,
+        // type: body.type,
       });
       successResponse(res, newPost);
     } catch (err) {
@@ -40,7 +45,7 @@ const posts = {
     }
   },
   /**
-   * 刪除所有資料
+   * 刪除所有貼文
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.deleteMany
    * @param {Object} req
    * @param {Object} res
@@ -50,7 +55,7 @@ const posts = {
     successResponse(res, []);
   },
   /**
-   * 刪除單筆資料
+   * 刪除單筆貼文
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.findByIdAndDelete
    * @param {Object} req
    * @param {Object} res
@@ -66,7 +71,7 @@ const posts = {
     }
   },
   /**
-   * 修改單筆資料
+   * 修改單筆貼文
    * Doc:https://mongoosejs.com/docs/api/model.html#model_Model.findByIdAndUpdate
    * @param {Object} req
    * @param {Object} res

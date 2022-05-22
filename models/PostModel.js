@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema(
     user: {
       // mongoose.Schema.Types.ObjectId === mongoose.Schema.ObjectId
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // 對應到定義 model 時取的名稱：  mongoose.model('User', userSchema) 需完全一樣。
+      ref: 'User', // 對應到註冊 model 的名稱: mongoose.model('User', userSchema) 需完全一樣。
       required: [true, '貼文 ID 未填寫'],
     },
     content: {

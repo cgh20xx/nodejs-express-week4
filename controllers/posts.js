@@ -11,12 +11,19 @@ const posts = {
    * @param {Object} res
    */
   async getPosts(req, res) {
+    // 網址參數 timeSort: 預設貼文排序為由大到小(新到舊)。?timeSort=asc 由小到大(舊到新)
+    const timeSort = req.query.timeSort == 'asc' ? 'createdAt' : '-createdAt';
+    // 網址參數 q: 搜尋文章 content 包含關鍵字。?q=keyword
+    const q =
+      req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
     // 將貼文中的 user id 替換為 user 的 name 和 photo
     // Doc:https://mongoosejs.com/docs/populate.html
-    const allPost = await PostModel.find().populate({
-      path: 'user', // path 來源為 PostModel 的 user 欄位
-      select: 'name photo', // 要顯示的欄位用空白隔開，若有不想顯示的欄位可加上減號。 ex:'-name'
-    });
+    const allPost = await PostModel.find(q)
+      .populate({
+        path: 'user', // path 來源為 PostModel 的 user 欄位
+        select: 'name photo', // 要顯示的欄位用空白隔開，若有不想顯示的欄位可加上減號。 ex:'-name'
+      })
+      .sort(timeSort);
     successResponse(res, allPost);
   },
   /**

@@ -1,8 +1,7 @@
 # nodejs-express-week4
 - 接續上一週程式
 - 整合 user model，只做後端 API
-- 顯示全體動態牆資料
-- 張貼動態(發文人 ID 先固定)
+- 設計篩選功能(從新到舊貼文、從舊到新、關鍵字搜尋)
 
 
 ## 安裝專案
@@ -22,17 +21,15 @@ $ npm start
 - 需在 package.json 裡面新增 script start 以及 engines (可指定node版本)
 ```json
 {
-  ...
   "scripts": {
     "start": "node ./bin/www",
   },
   "engines": {
     "node": "16.x"
   }
-  ...
 }
 ```
-## 全域安裝 Heroku CLI
+## 全域安裝 Heroku CLI (若沒裝過才裝)
 ```
 $ npm install -g heroku
 ```
@@ -43,7 +40,7 @@ $ heroku login
 ```
 ## 在 Heroku 建立此專案的雲端主機
 ```
-$ heroku create
+$ heroku create <herokud的次網域名稱>
 ```
 
 ## 佈署到 Heroku 遠端數據庫

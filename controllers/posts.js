@@ -1,4 +1,5 @@
 const PostModel = require('../models/PostModel');
+const UserModel = require('../models/UserModel');
 const {
   successResponse,
   errorResponse,
@@ -36,6 +37,13 @@ const posts = {
     try {
       const { body } = req;
       if (!body.user) throw new Error('[新增失敗] user id 未填寫');
+      // POST 新增貼文時，建議判斷有沒有這個使用者，
+      // 如果傳入不存在的 id ( 相似 id 但使用者資料庫中沒有此 id )，
+      // 也會被新增成功，但 user 會是 null。
+      const findUser = await UserModel.findById(body.user);
+      // console.log('findUser:', findUser);
+      if (!findUser) throw new Error('[新增失敗] user id 不存在');
+
       if (!body.content) throw new Error('[新增失敗] content 未填寫');
       body.content = body.content?.trim(); // 頭尾去空白
       // 只開放新增 user content image
